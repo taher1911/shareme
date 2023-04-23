@@ -2,13 +2,13 @@ import React from "react";
 
 //google auth
 import { useGoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import axios from "axios";
 // import {GoogleLogin} from '@react-oauth/google'
 // import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF } from "react-icons/fa";
+// import { FaFacebookF } from "react-icons/fa";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 
@@ -16,34 +16,6 @@ import { client } from "../sanity/client";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const responseFacebook = async (response) => {
-    try {
-      const { name, picture, id } = response;
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          name,
-          picture: picture.data.url,
-
-          sub: id,
-        })
-      );
-
-      const doc = {
-        _id: id,
-        _type: "user",
-        userName: name,
-        image: picture.data.url,
-      };
-      const user = await client.createIfNotExists(doc);
-      if (user) {
-        navigate("/", { replace: true });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -105,7 +77,7 @@ const Login = () => {
           <div className="shadow-2xl">
             {/* facebook login  */}
 
-            <FacebookLogin
+            {/* <FacebookLogin
               appId={process.env.REACT_APP_FACEBOOK_TOKEN}
               fields="name,email,picture"
               callback={responseFacebook}
@@ -119,7 +91,7 @@ const Login = () => {
                   <FaFacebookF className="mr-4" /> Sign in with facebook
                 </button>
               )}
-            />
+            /> */}
 
             {/* custom google login button  */}
             <button
